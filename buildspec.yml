@@ -16,7 +16,7 @@ phases:
       - chmod 400 /home/ubuntu/.ssh/fiap-lab.pem
   build:
     commands:
-      - stackName="cicd-ec2-ansible"
+      - stackName="PilhaMedDonateMicroServices"
       - aws cloudformation --region us-east-1 describe-stacks --stack-name $stackName
       - publicIp=$(aws cloudformation --region us-east-1 describe-stacks --stack-name $stackName --query "Stacks[0].Outputs[?OutputKey=='PublicIP'].OutputValue" --output text)
       - echo $publicIp
@@ -24,7 +24,7 @@ phases:
       - cat hosts
       - export ANSIBLE_HOST_KEY_CHECKING=False
       - ansible all -m ping  -i hosts -u ubuntu
-      - ansible-playbook -i hosts play.yaml 
+      - ansible-playbook -i hosts play.yaml
       - echo "teste" >> elb.txt
   post_build:
     commands:
